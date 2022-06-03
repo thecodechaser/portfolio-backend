@@ -16,7 +16,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_03_141022) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.string "photo"
+    t.string "photo_link"
     t.text "bio"
     t.string "portfolio_link"
     t.string "email", default: "", null: false
