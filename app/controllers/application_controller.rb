@@ -2,13 +2,13 @@
 
 class ApplicationController < ActionController::Base
   # without api calls
-  protect_from_forgery with: :exception
+  # protect_from_forgery with: :exception
 
   # for api calls
-  # protect_from_forgery prepend: true
+  protect_from_forgery prepend: true
 
   # prevent users to perfrom action without authentication
-  # before_action :authenticate_user!, unless: :api_path
+  before_action :authenticate_user!, unless: :api_path
 
   before_action :update_allowed_parameters, if: :devise_controller?
 
