@@ -8,4 +8,18 @@ class Api::V1::DoctorsController < ApplicationController
       render json: { success: false, errors: new_user.errors }, status: :unprocessable_entity
     end
   end
+
+  def login
+    valid = User.find_by(email: params[:email]).valid_password?(params[:password])
+    if valid
+      @user = User.find_by(email: params[:email])
+      @user.api_token = Devise.friendly_token.to_s
+      @user.save
+      respond_to do |format|
+        format.json { render json: @user.api_token, status: :ok }
+      end
+    else
+      render json: { success: false, message: 'Wrong email or password' }, status: :ok
+    end
+  end
 end
