@@ -2,6 +2,8 @@
 
 class Post < ApplicationRecord
   belongs_to :user
+  has_many :comments
+  has_many :likes
 
   validates :title, presence: true
   validates :h_one, presence: true

@@ -12,6 +12,8 @@ class CreatePosts < ActiveRecord::Migration[7.0]
       t.text :conclusion
       t.string :photo_one
       t.string :photo_two
+      t.integer :comments_counter, default: 0, null: false
+      t.integer :likes_counter, default: 0, null: false
       t.timestamps
     end
   end
