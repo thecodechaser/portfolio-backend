@@ -1,6 +1,7 @@
 class Api::V1::DoctorsController < ApplicationController
   def register
-    new_user = User.new(name: params[:name], email: params[:email], password: params[:password])
+    new_user = User.new(name: params[:name], photo_link: params[:photo_link], bio: params[:bio],
+    portfolio_link: params[:portfolio_link], email: params[:email], password: params[:password])
     if new_user.save
       render json: { success: true, message: 'User created', data: { user: new_user } }, status: :created
     else
