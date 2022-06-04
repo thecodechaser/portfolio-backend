@@ -1,5 +1,5 @@
-class Post < ApplicationRecord
-  belongs_to :user
+class Comment < ApplicationRecord
+  belongs_to :post
 
   validates :title, presence: true
   validates :h_one, presence: true
