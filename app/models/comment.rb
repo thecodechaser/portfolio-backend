@@ -1,11 +1,10 @@
 class Comment < ApplicationRecord
   belongs_to :post
+  after_save :update_comments_counter
 
   validates :comment, presence: true
   validates :author, presence: true
   validates :avatar, presence: true
-
-  after_save :update_comments_counter
 
   private
 
