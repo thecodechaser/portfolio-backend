@@ -15,9 +15,7 @@ class Api::V1::DoctorsController < ApplicationController
       @user = User.find_by(email: params[:email])
       @user.api_token = Devise.friendly_token.to_s
       @user.save
-      respond_to do |format|
-        format.json { render json: @user.api_token, status: :ok }
-      end
+      render json: { success: true, message: 'Login successfull', data: { api_token: @user.api_token } }, status: :ok
     else
       render json: { success: false, message: 'Wrong email or password' }, status: :ok
     end
