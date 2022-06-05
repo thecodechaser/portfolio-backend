@@ -1,4 +1,4 @@
-class Api::V1::DoctorsController < ApplicationController
+class Api::V1::UsersController < ApplicationController
   def register
     new_user = User.new(name: params[:name], photo_link: params[:photo_link], bio: params[:bio],
     portfolio_link: params[:portfolio_link], email: params[:email], password: params[:password])
