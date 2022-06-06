@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-class API::V1::PostsController < ApplicationController
+class Api::V1::PostsController < ApplicationController
   def index
     if request.headers['X-AUTH-TOKEN']
       user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
       if user
         posts = Post.all
         if posts
-          render json: { success: true, message: 'Posts loaded', data: { user: posts } }, status: :created
+          render json: { success: true, message: 'Posts loaded', data: { posts: posts } }, status: :ok
         else
           render json: { success: false, errors: posts.errors }, status: :unprocessable_entity
         end
@@ -40,15 +40,15 @@ class API::V1::PostsController < ApplicationController
     end
   end
 
-  def destory
+  def destroy
     if request.headers['X-AUTH-TOKEN']
       user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
       if user
         post = Post.find(params[:id])
-        if post.destory
-          render json: { success: true, message: 'Post deleted', data: { post: } }, status: :deleted
+        if post.destroy
+          render json: { success: true, message: 'Post deleted', data: { post: post} }, status: :ok
         else
-          render json: { success: false, errors: new_post.errors }, status: :unprocessable_entity
+          render json: { success: false, errors: 'Wrong post id' }, status: :unprocessable_entity
         end
       else
         render json: { success: false, errors: 'Wrong authentication token' }, status: :unprocessable_entity

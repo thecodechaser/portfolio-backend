@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       post 'users/sign_in' => 'users#login'
       get 'posts/load' => 'posts#index'
       post 'posts/create' => 'posts#create'
-      delete 'posts/delete' => 'posts#destory'
+      delete 'posts/delete' => 'posts#destroy'
     end
   end   
 
