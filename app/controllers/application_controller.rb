@@ -2,10 +2,10 @@
 
 class ApplicationController < ActionController::Base
   # without api calls
-  protect_from_forgery with: :exception
+  # protect_from_forgery with: :exception
 
   # for api calls
-  # protect_from_forgery prepend: true
+  protect_from_forgery prepend: true
 
   # prevent users to perfrom action without authentication
   # before_action :authenticate_user!, unless: :api_path
@@ -20,4 +20,8 @@ class ApplicationController < ActionController::Base
     end
     devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:name, :email, :password, :current_password) }
   end
+
+  # def api_path
+  #   request.original_url.include?('api')
+  # end
 end
