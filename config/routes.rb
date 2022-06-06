@@ -15,6 +15,9 @@ Rails.application.routes.draw do
       get 'comments/load' => 'comments#index'
       post 'comments/create' => 'comments#create'
       delete 'comments/delete' => 'comments#destroy'
+      get 'likes/load' => 'likes#index'
+      post 'likes/create' => 'likes#create'
+      delete 'likes/delete' => 'likes#destroy'
     end
   end   
 
