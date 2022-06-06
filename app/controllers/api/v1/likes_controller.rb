@@ -4,11 +4,11 @@ class Api::V1::LikesController < ApplicationController
     if request.headers['X-AUTH-TOKEN']
       user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
       if user
-        comments = Comment.all
-        if comments
-          render json: { success: true, message: 'Comments loaded', data: { comments: comments } }, status: :ok
+        likes = Like.all
+        if likes
+          render json: { success: true, message: 'Likes loaded', data: { likes: likes } }, status: :ok
         else
-          render json: { success: false, errors: comments.errors }, status: :unprocessable_entity
+          render json: { success: false, errors: likes.errors }, status: :unprocessable_entity
         end
       else
         render json: { success: false, errors: 'Wrong authentication token' }, status: :unprocessable_entity
@@ -41,14 +41,14 @@ class Api::V1::LikesController < ApplicationController
     if request.headers['X-AUTH-TOKEN']
       user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
       if user
-        comment = Comment.find(params[:id])
-        post = comment.post
-        post.comments_counter -= 1
+        like = Like.find(params[:id])
+        post = like.post
+        post.likes_counter -= 1
         post.save
-        if comment.destroy
-          render json: { success: true, message: 'Comment deleted', data: { comment: comment} }, status: :ok
+        if like.destroy
+          render json: { success: true, message: 'Like deleted', data: { like: like} }, status: :ok
         else
-          render json: { success: false, errors: 'Wrong comment id' }, status: :unprocessable_entity
+          render json: { success: false, errors: 'Wrong like id' }, status: :unprocessable_entity
         end
       else
         render json: { success: false, errors: 'Wrong authentication token' }, status: :unprocessable_entity
@@ -57,5 +57,5 @@ class Api::V1::LikesController < ApplicationController
       render json: { success: false, message: 'please sign in or add the token' }, status: :ok
     end
   end
-  
+
 end
