@@ -10,8 +10,11 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def login
-    valid = User.find_by(email: params[:email]).valid_password?(params[:password])
-    if valid
+    valid = User.find_by(email: params[:email])
+    if valid 
+    valid_two = User.find_by(email: params[:email]).valid_password?(params[:password])
+    end
+    if valid_two
       @user = User.find_by(email: params[:email])
       @user.api_token = Devise.friendly_token.to_s
       @user.save
