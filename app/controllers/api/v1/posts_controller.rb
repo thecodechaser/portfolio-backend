@@ -1,12 +1,21 @@
 class API::V1::PostsController <  ApplicationController
 
   def index
+    if request.headers['X-AUTH-TOKEN']
+      user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
+      if user
     posts = Post.all 
     if posts
       render json: { success: true, message: 'Posts loaded', data: { user: posts } }, status: :created
     else
       render json: { success: false, errors: posts.errors }, status: :unprocessable_entity
     end
+  else
+    render json: { success: false, errors: 'Wrong authentication token' }, status: :unprocessable_entity
+  end
+  else
+    render json: { success: false, message: 'please sign in or add the token' }, status: :ok
+end
   end
 
   def create
@@ -31,6 +40,11 @@ class API::V1::PostsController <  ApplicationController
 
 
   def destory
-
+    post = Post.find(params[:id])
+    if post.destory
+      render json: { success: true, message: 'Post deleted', data: { post: post } }, status: :deleted
+        else
+          render json: { success: false, errors: new_post.errors }, status: :unprocessable_entity
   end
+
 end
