@@ -1,4 +1,4 @@
-class Api::v1::CommentsConrtoller < ApplicationController
+class Api::V1::CommentsController < ApplicationController
 
   def index 
     if request.headers['X-AUTH-TOKEN']
@@ -42,6 +42,9 @@ class Api::v1::CommentsConrtoller < ApplicationController
       user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
       if user
         comment = Comment.find(params[:id])
+        post = comment.post
+        post.comments_counter -= 1
+        post.save
         if comment.destroy
           render json: { success: true, message: 'Comment deleted', data: { comment: comment} }, status: :ok
         else
