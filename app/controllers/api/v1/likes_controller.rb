@@ -22,12 +22,11 @@ class Api::V1::LikesController < ApplicationController
     if request.headers['X-AUTH-TOKEN']
       user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
       if user
-        new_comment = Comment.new(comment: params[:comment], author: params[:author], avatar: params[:avatar],
-        post_id: params[:post_id])
-        if new_comment.save
-          render json: { success: true, message: 'Comment created', data: {comment: new_comment } }, status: :created
+        new_like = Like.new(post_id: params[:post_id])
+        if new_like.save
+          render json: { success: true, message: 'Like created', data: {like: new_like } }, status: :created
         else
-          render json: { success: false, errors: new_comment.errors }, status: :unprocessable_entity
+          render json: { success: false, errors: new_like.errors }, status: :unprocessable_entity
         end
       else
         render json: { success: false, errors: 'Wrong authentication token' }, status: :unprocessable_entity
