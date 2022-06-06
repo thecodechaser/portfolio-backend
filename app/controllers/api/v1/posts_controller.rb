@@ -7,4 +7,8 @@ class API::V1::PostsController <  ApplicationController
   def create
 
   end
+
+  def destory
+
+  end
 end
