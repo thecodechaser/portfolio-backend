@@ -20,6 +20,20 @@ class Api::v1::CommentsConrtoller < ApplicationController
   end
 
   def destroy
-
+    if request.headers['X-AUTH-TOKEN']
+      user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
+      if user
+        comment = Comment.find(params[:id])
+        if comment.destroy
+          render json: { success: true, message: 'Comment deleted', data: { comment: comment} }, status: :ok
+        else
+          render json: { success: false, errors: 'Wrong comment id' }, status: :unprocessable_entity
+        end
+      else
+        render json: { success: false, errors: 'Wrong authentication token' }, status: :unprocessable_entity
+      end
+    else
+      render json: { success: false, message: 'please sign in or add the token' }, status: :ok
+    end
   end
 end
