@@ -18,4 +18,8 @@ class Api::v1::CommentsConrtoller < ApplicationController
       render json: { success: false, message: 'please sign in or add the token' }, status: :ok
     end
   end
+
+  def destroy
+
+  end
 end
