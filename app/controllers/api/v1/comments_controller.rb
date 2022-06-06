@@ -1,9 +1,23 @@
 class Api::v1::CommentsConrtoller < ApplicationController
 
   def index 
-
+    if request.headers['X-AUTH-TOKEN']
+      user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
+      if user
+        comments = Comment.all
+        if comments
+          render json: { success: true, message: 'Comments loaded', data: { comments: comments } }, status: :ok
+        else
+          render json: { success: false, errors: comments.errors }, status: :unprocessable_entity
+        end
+      else
+        render json: { success: false, errors: 'Wrong authentication token' }, status: :unprocessable_entity
+      end
+    else
+      render json: { success: false, message: 'please sign in or add the token' }, status: :ok
+    end
   end
-  
+
   def create
     if request.headers['X-AUTH-TOKEN']
       user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
