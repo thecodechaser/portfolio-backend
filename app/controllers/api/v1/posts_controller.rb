@@ -7,7 +7,7 @@ class Api::V1::PostsController < ApplicationController
       if user
         posts = Post.all
         if posts
-          render json: { success: true, message: 'Posts loaded', data: { posts: posts } }, status: :ok
+          render json: { success: true, message: 'Posts loaded', data: { posts: } }, status: :ok
         else
           render json: { success: false, errors: posts.errors }, status: :unprocessable_entity
         end
@@ -46,7 +46,7 @@ class Api::V1::PostsController < ApplicationController
       if user
         post = Post.find(params[:id])
         if post.destroy
-          render json: { success: true, message: 'Post deleted', data: { post: post} }, status: :ok
+          render json: { success: true, message: 'Post deleted', data: { post: } }, status: :ok
         else
           render json: { success: false, errors: 'Wrong post id' }, status: :unprocessable_entity
         end
