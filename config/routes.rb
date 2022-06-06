@@ -12,6 +12,8 @@ Rails.application.routes.draw do
       get 'posts/load' => 'posts#index'
       post 'posts/create' => 'posts#create'
       delete 'posts/delete' => 'posts#destroy'
+      post 'comments/create' => 'comments#create'
+      delete 'comments/delete' => 'comments#destroy'
     end
   end   
 
