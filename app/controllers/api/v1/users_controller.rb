@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class Api::V1::UsersController < ApplicationController
   def register
     new_user = User.new(name: params[:name], photo_link: params[:photo_link], bio: params[:bio],
-    portfolio_link: params[:portfolio_link], email: params[:email], password: params[:password])
+                        portfolio_link: params[:portfolio_link], email: params[:email], password: params[:password])
     if new_user.save
       render json: { success: true, message: 'User created', data: { user: new_user } }, status: :created
     else
@@ -11,9 +13,7 @@ class Api::V1::UsersController < ApplicationController
 
   def login
     valid = User.find_by(email: params[:email])
-    if valid 
-    valid_two = User.find_by(email: params[:email]).valid_password?(params[:password])
-    end
+    valid_two = User.find_by(email: params[:email]).valid_password?(params[:password]) if valid
     if valid_two
       @user = User.find_by(email: params[:email])
       @user.api_token = Devise.friendly_token.to_s
