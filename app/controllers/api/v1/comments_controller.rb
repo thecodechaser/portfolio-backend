@@ -4,7 +4,8 @@ class Api::V1::CommentsController < ApplicationController
     if request.headers['X-AUTH-TOKEN']
       user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
       if user
-        comments = Comment.all
+        post = Post.find(params[:post_id])
+        comments = post.comments
         if comments
           render json: { success: true, message: 'Comments loaded', data: { comments: comments } }, status: :ok
         else

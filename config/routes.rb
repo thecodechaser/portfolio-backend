@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       get 'posts/load' => 'posts#index'
       post 'posts/create' => 'posts#create'
       delete 'posts/delete' => 'posts#destroy'
-      get 'comments/load' => 'comments#index'
+      post 'comments/load' => 'comments#index'
       post 'comments/create' => 'comments#create'
       delete 'comments/delete' => 'comments#destroy'
       get 'likes/load' => 'likes#index'
