@@ -1,5 +1,9 @@
 class Api::v1::CommentsConrtoller < ApplicationController
 
+  def index 
+
+  end
+  
   def create
     if request.headers['X-AUTH-TOKEN']
       user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
