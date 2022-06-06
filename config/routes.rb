@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       post 'users/sign_up' => 'users#register'
       post 'users/sign_in' => 'users#login'
+      get 'posts/load' => 'posts#index'
+      post 'posts/create' => 'posts#create'
+      delete 'posts/delete' => 'posts#destory'
     end
   end   
 
