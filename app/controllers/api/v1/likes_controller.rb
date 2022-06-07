@@ -5,7 +5,8 @@ class Api::V1::LikesController < ApplicationController
     if request.headers['X-AUTH-TOKEN']
       user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
       if user
-        likes = Like.all
+        post = Post.find(params[:post_id])
+        likes = post.likes
         if likes
           render json: { success: true, message: 'Likes loaded', data: { likes: } }, status: :ok
         else
