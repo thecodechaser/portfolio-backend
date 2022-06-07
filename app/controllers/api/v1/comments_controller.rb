@@ -2,8 +2,8 @@
 
 class Api::V1::CommentsController < ApplicationController
   def index
-    if request.headers['X-AUTH-TOKEN']
-      user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
+    if request.headers['Authorization']
+      user = User.find_by_api_token(request.headers['Authorization'])
       if user
         post = Post.find(params[:post_id])
         comments = post.comments
@@ -21,8 +21,8 @@ class Api::V1::CommentsController < ApplicationController
   end
 
   def create
-    if request.headers['X-AUTH-TOKEN']
-      user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
+    if request.headers['Authorization']
+      user = User.find_by_api_token(request.headers['Authorization'])
       if user
         new_comment = Comment.new(comment: params[:comment], author: params[:author], avatar: params[:avatar],
                                   post_id: params[:post_id])
@@ -40,8 +40,8 @@ class Api::V1::CommentsController < ApplicationController
   end
 
   def destroy
-    if request.headers['X-AUTH-TOKEN']
-      user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
+    if request.headers['Authorization']
+      user = User.find_by_api_token(request.headers['Authorization'])
       if user
         comment = Comment.find(params[:id])
         post = comment.post

@@ -2,8 +2,8 @@
 
 class Api::V1::PostsController < ApplicationController
   def index
-    if request.headers['X-AUTH-TOKEN']
-      user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
+    if request.headers['Authorization']
+      user = User.find_by_api_token(request.headers['Authorization'])
       if user
         posts = Post.all
         if posts
@@ -20,8 +20,8 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def create
-    if request.headers['X-AUTH-TOKEN']
-      user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
+    if request.headers['Authorization']
+      user = User.find_by_api_token(request.headers['Authorization'])
       if user
         new_post = user.posts.new(title: params[:title], h_one: params[:h_one], p_one: params[:p_one], h_two:
         params[:h_two], p_two: params[:p_two], h_three: params[:h_three], p_three: params[:p_three],
@@ -41,8 +41,8 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def destroy
-    if request.headers['X-AUTH-TOKEN']
-      user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
+    if request.headers['Authorization']
+      user = User.find_by_api_token(request.headers['Authorization'])
       if user
         post = Post.find(params[:id])
         if post.destroy

@@ -2,8 +2,8 @@
 
 class Api::V1::LikesController < ApplicationController
   def index
-    if request.headers['X-AUTH-TOKEN']
-      user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
+    if request.headers['Authorization']
+      user = User.find_by_api_token(request.headers['Authorization'])
       if user
         post = Post.find(params[:post_id])
         likes = post.likes
@@ -21,8 +21,8 @@ class Api::V1::LikesController < ApplicationController
   end
 
   def create
-    if request.headers['X-AUTH-TOKEN']
-      user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
+    if request.headers['Authorization']
+      user = User.find_by_api_token(request.headers['Authorization'])
       if user
         new_like = Like.new(post_id: params[:post_id])
         if new_like.save
@@ -39,8 +39,8 @@ class Api::V1::LikesController < ApplicationController
   end
 
   def destroy
-    if request.headers['X-AUTH-TOKEN']
-      user = User.find_by_api_token(request.headers['X-AUTH-TOKEN'])
+    if request.headers['Authorization']
+      user = User.find_by_api_token(request.headers['Authorization'])
       if user
         like = Like.find(params[:id])
         post = like.post
