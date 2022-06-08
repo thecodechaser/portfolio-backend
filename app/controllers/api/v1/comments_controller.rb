@@ -48,7 +48,7 @@ class Api::V1::CommentsController < ApplicationController
         post.comments_counter -= 1
         post.save
         if comment.destroy
-          render json: { success: true, message: 'Comment deleted', data: { comment: } }, status: :ok
+          render json: { success: true, message: 'Comment deleted', data: { comment: comment} }, status: :ok
         else
           render json: { success: false, errors: 'Wrong comment id' }, status: :unprocessable_entity
         end

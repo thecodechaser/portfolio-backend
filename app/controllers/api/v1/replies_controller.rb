@@ -43,14 +43,15 @@ class Api::V1::RepliesController < ApplicationController
     if request.headers['Authorization']
       user = User.find_by_api_token(request.headers['Authorization'])
       if user
-        comment = Comment.find(params[:id])
+        reply = Reply.find(params[:id])
+        comment = reply.comment
         post = comment.post
         post.comments_counter -= 1
         post.save
-        if comment.destroy
-          render json: { success: true, message: 'Comment deleted', data: { comment: } }, status: :ok
+        if reply.destroy
+          render json: { success: true, message: 'Reply deleted', data: { reply: reply} }, status: :ok
         else
-          render json: { success: false, errors: 'Wrong comment id' }, status: :unprocessable_entity
+          render json: { success: false, errors: 'Wrong reply id' }, status: :unprocessable_entity
         end
       else
         render json: { success: false, errors: 'Wrong authentication token' }, status: :unprocessable_entity
