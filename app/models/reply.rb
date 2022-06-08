@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Reply < ApplicationRecord
   belongs_to :comment
   after_save :update_comments_counter
