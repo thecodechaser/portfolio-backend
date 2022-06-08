@@ -24,12 +24,12 @@ class Api::V1::RepliesController < ApplicationController
     if request.headers['Authorization']
       user = User.find_by_api_token(request.headers['Authorization'])
       if user
-        new_comment = Comment.new(comment: params[:comment], author: params[:author], avatar: params[:avatar],
-                                  post_id: params[:post_id])
-        if new_comment.save
-          render json: { success: true, message: 'Comment created', data: { comment: new_comment } }, status: :created
+        new_reply = Reply.new(reply: params[:comment], author: params[:author], avatar: params[:avatar],
+                                  comment_id: params[:comment_id])
+        if new_reply.save
+          render json: { success: true, message: 'Reply created', data: { reply: new_reply } }, status: :created
         else
-          render json: { success: false, errors: new_comment.errors }, status: :unprocessable_entity
+          render json: { success: false, errors: new_reply.errors }, status: :unprocessable_entity
         end
       else
         render json: { success: false, errors: 'Wrong authentication token' }, status: :unprocessable_entity
