@@ -2,6 +2,7 @@
 
 class Comment < ApplicationRecord
   belongs_to :post
+  has_many :replies
   after_save :update_comments_counter
 
   validates :comment, presence: true
