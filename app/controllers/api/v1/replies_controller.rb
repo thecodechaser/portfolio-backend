@@ -24,7 +24,7 @@ class Api::V1::RepliesController < ApplicationController
     if request.headers['Authorization']
       user = User.find_by_api_token(request.headers['Authorization'])
       if user
-        new_reply = Reply.new(reply: params[:comment], author: params[:author], avatar: params[:avatar],
+        new_reply = Reply.new(reply: params[:reply], author: params[:author], avatar: params[:avatar],
                                   comment_id: params[:comment_id])
         if new_reply.save
           render json: { success: true, message: 'Reply created', data: { reply: new_reply } }, status: :created
