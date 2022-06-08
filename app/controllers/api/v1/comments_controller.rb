@@ -8,7 +8,7 @@ class Api::V1::CommentsController < ApplicationController
         post = Post.find(params[:post_id])
         comments = post.comments
         if comments
-          render json: { success: true, message: 'Comments loaded', data: { comments: } }, status: :ok
+          render json: { success: true, message: 'Comments loaded', data: { comments: comments} }, status: :ok
         else
           render json: { success: false, errors: comments.errors }, status: :unprocessable_entity
         end
