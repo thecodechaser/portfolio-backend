@@ -2,7 +2,7 @@
 
 class Comment < ApplicationRecord
   belongs_to :post
-  has_many :replies
+  has_many :replies, dependent: :destroy
   after_save :update_comments_counter
 
   validates :comment, presence: true
