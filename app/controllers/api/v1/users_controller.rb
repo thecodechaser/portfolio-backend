@@ -31,7 +31,7 @@ class Api::V1::UsersController < ApplicationController
         post = Post.find(params[:post_id])
         user = post.user
         if user
-          render json: { success: true, message: 'User loaded', data: { user: user} }, status: :ok
+          render json: { success: true, message: 'User loaded', data: { user: } }, status: :ok
         else
           render json: { success: false, errors: user.errors }, status: :unprocessable_entity
         end

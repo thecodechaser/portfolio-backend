@@ -8,7 +8,7 @@ class Api::V1::RepliesController < ApplicationController
         comment = Comment.find(params[:comment_id])
         replies = comment.replies
         if replies
-          render json: { success: true, message: 'Replies loaded', data: { replies: replies} }, status: :ok
+          render json: { success: true, message: 'Replies loaded', data: { replies: } }, status: :ok
         else
           render json: { success: false, errors: replies.errors }, status: :unprocessable_entity
         end
@@ -49,7 +49,7 @@ class Api::V1::RepliesController < ApplicationController
         post.comments_counter -= 1
         post.save
         if reply.destroy
-          render json: { success: true, message: 'Reply deleted', data: { reply: reply} }, status: :ok
+          render json: { success: true, message: 'Reply deleted', data: { reply: } }, status: :ok
         else
           render json: { success: false, errors: 'Wrong reply id' }, status: :unprocessable_entity
         end

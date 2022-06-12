@@ -8,7 +8,7 @@ class Api::V1::CommentsController < ApplicationController
         post = Post.find(params[:post_id])
         comments = post.comments
         if comments
-          render json: { success: true, message: 'Comments loaded', data: { comments: comments} }, status: :ok
+          render json: { success: true, message: 'Comments loaded', data: { comments: } }, status: :ok
         else
           render json: { success: false, errors: comments.errors }, status: :unprocessable_entity
         end
@@ -48,7 +48,7 @@ class Api::V1::CommentsController < ApplicationController
         post.comments_counter -= 1
         post.save
         if comment.destroy
-          render json: { success: true, message: 'Comment deleted', data: { comment: comment} }, status: :ok
+          render json: { success: true, message: 'Comment deleted', data: { comment: } }, status: :ok
         else
           render json: { success: false, errors: 'Wrong comment id' }, status: :unprocessable_entity
         end
