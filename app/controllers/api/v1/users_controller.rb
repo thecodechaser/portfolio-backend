@@ -23,4 +23,23 @@ class Api::V1::UsersController < ApplicationController
       render json: { success: false, message: 'Wrong email or password' }, status: :ok
     end
   end
+
+  def index
+    if request.headers['Authorization']
+      user = User.find_by_api_token(request.headers['Authorization'])
+      if user
+        post = Post.find(params[:post_id])
+        comments = post.comments
+        if comments
+          render json: { success: true, message: 'Comments loaded', data: { comments: } }, status: :ok
+        else
+          render json: { success: false, errors: comments.errors }, status: :unprocessable_entity
+        end
+      else
+        render json: { success: false, errors: 'Wrong authentication token' }, status: :unprocessable_entity
+      end
+    else
+      render json: { success: false, message: 'please sign in or add the token' }, status: :ok
+    end
+  end
 end
