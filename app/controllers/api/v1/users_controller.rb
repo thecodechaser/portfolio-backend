@@ -29,11 +29,11 @@ class Api::V1::UsersController < ApplicationController
       user = User.find_by_api_token(request.headers['Authorization'])
       if user
         post = Post.find(params[:post_id])
-        comments = post.comments
-        if comments
-          render json: { success: true, message: 'Comments loaded', data: { comments: } }, status: :ok
+        user = post.user
+        if user
+          render json: { success: true, message: 'User loaded', data: { user: user} }, status: :ok
         else
-          render json: { success: false, errors: comments.errors }, status: :unprocessable_entity
+          render json: { success: false, errors: user.errors }, status: :unprocessable_entity
         end
       else
         render json: { success: false, errors: 'Wrong authentication token' }, status: :unprocessable_entity
