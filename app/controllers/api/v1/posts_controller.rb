@@ -5,7 +5,7 @@ class Api::V1::PostsController < ApplicationController
     if request.headers['Authorization']
       user = User.find_by_api_token(request.headers['Authorization'])
       if user
-        posts = Post.all
+        posts = Post.all.order(created_at: :desc)
         if posts
           render json: { success: true, message: 'Posts loaded', data: { posts: } }, status: :ok
         else

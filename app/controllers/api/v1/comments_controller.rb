@@ -6,7 +6,7 @@ class Api::V1::CommentsController < ApplicationController
       user = User.find_by_api_token(request.headers['Authorization'])
       if user
         post = Post.find(params[:post_id])
-        comments = post.comments
+        comments = post.comments.order(created_at: :asc)
         if comments
           render json: { success: true, message: 'Comments loaded', data: { comments: } }, status: :ok
         else
