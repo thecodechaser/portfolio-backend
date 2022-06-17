@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
-class Api::V1::PostsController < ApplicationController
+class Api::V1::RepliesController < ApplicationController
   def index
     if request.headers['Authorization']
       user = User.find_by_api_token(request.headers['Authorization'])
       if user
-        posts = Post.all.order(created_at: :desc)
-        if posts
-          render json: { success: true, message: 'Posts loaded', data: { posts: } }, status: :ok
+        comment = Comment.find(params[:comment_id])
+        replies = comment.replies
+        if replies
+          render json: { success: true, message: 'Replies loaded', data: { replies: } }, status: :ok
         else
-          render json: { success: false, errors: posts.errors }, status: :unprocessable_entity
+          render json: { success: false, errors: replies.errors }, status: :unprocessable_entity
         end
       else
         render json: { success: false, errors: 'Wrong authentication token' }, status: :unprocessable_entity
@@ -23,14 +24,12 @@ class Api::V1::PostsController < ApplicationController
     if request.headers['Authorization']
       user = User.find_by_api_token(request.headers['Authorization'])
       if user
-        new_post = user.posts.new(title: params[:title], h_one: params[:h_one], p_one: params[:p_one], h_two:
-        params[:h_two], p_two: params[:p_two], h_three: params[:h_three], p_three: params[:p_three],
-                                  conclusion: params[:conclusion], photo_one: params[:photo_one],
-                                  photo_two: params[:photo_two])
-        if new_post.save
-          render json: { success: true, message: 'Post created', data: { post: new_post } }, status: :created
+        new_reply = Reply.new(reply: params[:reply], author: params[:author], avatar: params[:avatar],
+                              comment_id: params[:comment_id])
+        if new_reply.save
+          render json: { success: true, message: 'Reply created', data: { reply: new_reply } }, status: :created
         else
-          render json: { success: false, errors: new_post.errors }, status: :unprocessable_entity
+          render json: { success: false, errors: new_reply.errors }, status: :unprocessable_entity
         end
       else
         render json: { success: false, errors: 'Wrong authentication token' }, status: :unprocessable_entity
@@ -44,11 +43,15 @@ class Api::V1::PostsController < ApplicationController
     if request.headers['Authorization']
       user = User.find_by_api_token(request.headers['Authorization'])
       if user
-        post = Post.find(params[:id])
-        if post.destroy
-          render json: { success: true, message: 'Post deleted', data: { post: } }, status: :ok
+        reply = Reply.find(params[:id])
+        comment = reply.comment
+        post = comment.post
+        post.comments_counter -= 1
+        post.save
+        if reply.destroy
+          render json: { success: true, message: 'Reply deleted', data: { reply: } }, status: :ok
         else
-          render json: { success: false, errors: 'Wrong post id' }, status: :unprocessable_entity
+          render json: { success: false, errors: 'Wrong reply id' }, status: :unprocessable_entity
         end
       else
         render json: { success: false, errors: 'Wrong authentication token' }, status: :unprocessable_entity
