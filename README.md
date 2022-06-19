@@ -17,7 +17,7 @@
 
 ## Live version
 
-[Portfolio Backend]('https://thecodechaser-backend.herokuapp.com)
+[Portfolio Backend](https://thecodechaser-backend.herokuapp.com)
 
 ## Getting Started
 
